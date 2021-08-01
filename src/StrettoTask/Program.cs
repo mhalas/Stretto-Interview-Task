@@ -1,51 +1,64 @@
 ﻿using Common.ApiClient;
 using Common.Common;
 using Common.Converters;
+using Common.Dto;
 using Common.Enums;
 using Common.Factories;
+using Microsoft.Extensions.Configuration;
+using NLog;
+using RestEase;
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace StrettoTask
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Stretto interview task.");
-            Console.WriteLine("Loading...");
+            var logger = LogManager.GetCurrentClassLogger();
 
-            var apiAddress = "http://net-poland-interview-stretto.us-east-2.elasticbeanstalk.com/api/flats/";
-            var csvEndpoint = "csv";
-            var taxesEndpoint = "taxes?city={0}";
-            var dateTimeFormat = "ddd MMM dd hh:mm:ss EDT yyyy";
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build()
+                .Get<AppConfigurationDto>();
+
+            logger.Info("Stretto interview task.");
 
             var resultListFormater = new ResultListFormater();
-            var convertCsvToDtoList = new ConvertCsvToDtoList();
+            IRealEstateListConverter realEstateListConverter = new RealEstateListConverter();
 
-            var strettoApi = new StrettoApi(apiAddress, csvEndpoint, taxesEndpoint);
 
-            Console.WriteLine("Downloading csv...");
-            var csvPlainText = strettoApi.GetCsvData();
-            Console.WriteLine("Success.");
+            IStrettoApiClient apiClient = RestClient.For<IStrettoApiClient>(configuration.ApiAddress);
+            var apiClientDecorator = new StrettoApiClientDecorator(apiClient);
 
-            var realEstateList = convertCsvToDtoList.Convert(csvPlainText, dateTimeFormat);
+            string csvPlainText = string.Empty;
+            try
+            {
+                logger.Info("Getting csv...");
+                csvPlainText = await apiClientDecorator.GetCsvData();
+                logger.Info("Success.");
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Error occured while getting csv data from API.");
 
-            var cityList = realEstateList.Select(x => x.City).Distinct();
+            }
 
-            Console.WriteLine("Download taxes.");
-            var taxList = strettoApi.GetTaxesForCities(cityList);
-            Console.WriteLine("Success.");
+            var taskFactory = new TaskGetterFactory(configuration, 
+                resultListFormater, 
+                apiClientDecorator, 
+                realEstateListConverter, 
+                csvPlainText);
 
-            var taskFactory = new TaskGetterFactory(resultListFormater, csvPlainText, realEstateList, taxList);
 
-            Console.WriteLine("Loading complete. Press any key to continue...");
+            logger.Info("Loading complete. Press any key to continue...");
             Console.ReadKey();
 
             while(true)
             {
                 Console.Clear();
-                Console.WriteLine("Menu:\r\n" +
+                logger.Debug("Menu:\r\n" +
                     "Choose option number." +
                     "1. Print data from plaintext.\r\n" +
                     "2. Print parsed data to dto list type.\r\n" +
@@ -53,14 +66,16 @@ namespace StrettoTask
                     "4. Find cheapest apartment with largest number of rooms.\r\n" +
                     "5. Find most expensive apartment for every city.\r\n" +
                     "6. Exit.");
-                Console.Write("Answer: ");
+                logger.Trace("Answer: ");
                 var answer = Console.ReadLine();
+
+                logger.Info("User answer: '{0}'.", answer);
 
                 var answerInt = 0;
 
                 if(!int.TryParse(answer, out answerInt))
                 {
-                    Console.WriteLine("Cant parse answer. Please try again. Press any key to continue...");
+                    logger.Info("Cant parse answer. Please try again. Press any key to continue...");
                     Console.ReadKey();
 
                     continue;
@@ -69,16 +84,17 @@ namespace StrettoTask
                 if (answerInt == 6)
                     break;
 
-                var task = taskFactory.GetTask((StrettoTaskType)answerInt);
-                Console.WriteLine("Print response:");
+                var task = await taskFactory.GetTask((StrettoTaskType)answerInt);
+                logger.Info("Executing task.");
                 var response = task.Execute();
-                Console.WriteLine(response);
-                Console.WriteLine("Press any key to back to menu...");
+                logger.Debug("Result: \r\n{0}.", response);
+                logger.Info("Press any key to back to menu...");
                 Console.ReadKey();
             }
 
             Console.Clear();
-            Console.WriteLine("Closing application. Press any key to close application.");
+            logger.Info("Closing application. Press any key to close application.");
+            Console.ReadKey();
         }
     }
 }

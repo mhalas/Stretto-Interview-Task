@@ -7,10 +7,17 @@ namespace Common.Common
 {
     public class ResultListFormater
     {
+        public string PrintResult(RealEstateDto realEstateDto, int rowNumber = 1)
+        {
+            return string.Format("{0}. {1}", rowNumber, realEstateDto.ToString());
+        }
+
         public string PrintResult(IEnumerable<RealEstateDto> realEstateList)
         {
             if (realEstateList == null || !realEstateList.Any())
+            {
                 return "No data";
+            }
 
             StringBuilder result = new StringBuilder();
 
@@ -19,18 +26,24 @@ namespace Common.Common
             foreach (var item in realEstateList)
             {
                 if (item == null)
+                {
                     continue;
+                }
 
                 if (result.Length != 0)
+                {
                     result.AppendLine();
+                }
 
-                result.Append(string.Format("{0}. {1}", rowNumber, item.ToString()));
+                result.Append(PrintResult(item, rowNumber));
 
                 rowNumber++;
             }
 
             if (result.Length == 0)
+            {
                 return "No data";
+            }
 
             return result.ToString();
         }

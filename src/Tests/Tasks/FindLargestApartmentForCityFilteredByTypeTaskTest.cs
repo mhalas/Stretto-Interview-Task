@@ -10,9 +10,9 @@ namespace Tests.Tasks
     public class FindLargestApartmentForCityFilteredByTypeTaskTest
     {
         [TestCase("Type1", "No data")]
-        [TestCase("Type2", "1. RealEstateDto { Street = A, City = , ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 1, Type = Type2, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }")]
-        [TestCase("Type3", "1. RealEstateDto { Street = D, City = , ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 3, Type = Type3, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }")]
-        [TestCase("Type4", "1. RealEstateDto { Street = G, City = , ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 8, Type = Type4, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }")]
+        [TestCase("Type2", "1. RealEstateDto { Street = A, City = , Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 1, Type = Type2, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }")]
+        [TestCase("Type3", "1. RealEstateDto { Street = D, City = , Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 3, Type = Type3, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }")]
+        [TestCase("Type4", "1. RealEstateDto { Street = G, City = , Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 8, Type = Type4, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }")]
         public void Task_FindLargestApartmentForCityFilteredByType_ReturnOnlyOneElementForType(string typeFilter, string expectedResult)
         {
             List<RealEstateDto> list = new List<RealEstateDto>()
@@ -59,10 +59,10 @@ namespace Tests.Tasks
             FindLargestApartmentForCityFilteredByTypeTask task = new FindLargestApartmentForCityFilteredByTypeTask(resultListFormater, list, typeToTest);
             var result = task.Execute();
 
-            var expectedResult = "1. RealEstateDto { Street = A, City = City1, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 1, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }\r\n" +
-                "2. RealEstateDto { Street = B, City = City2, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 1, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }\r\n" +
-                "3. RealEstateDto { Street = C, City = City3, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 2, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }\r\n" +
-                "4. RealEstateDto { Street = G, City = City4, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 8, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longtitude = 0 }";
+            var expectedResult = "1. RealEstateDto { Street = A, City = City1, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 1, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }\r\n" +
+                "2. RealEstateDto { Street = B, City = City2, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 1, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }\r\n" +
+                "3. RealEstateDto { Street = C, City = City3, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 2, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }\r\n" +
+                "4. RealEstateDto { Street = G, City = City4, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 8, Type = Type1, SaleDate = 01.01.2020 00:00:00, Price = 0, Latitude = 0, Longitude = 0 }";
 
             Assert.AreEqual(expectedResult, result);
         }

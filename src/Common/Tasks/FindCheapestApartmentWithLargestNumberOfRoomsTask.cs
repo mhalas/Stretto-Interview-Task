@@ -21,8 +21,7 @@ namespace Common.Tasks
             var result = _realEstateList
                 .GroupBy(x => (x.Baths + x.Beds) / x.Price)
                 .OrderByDescending(x => x.Key)
-                .First()
-                .ToList();
+                .First();
 
             return _resultListFormater.PrintResult(result);
         }
