@@ -9,9 +9,9 @@ namespace Tests.Tasks
 {
     public class FindCheapestApartmentWithLargestNumberOfRoomsTaskTest
     {
-        [TestCase(1, 1, 100, 1, 2, 100, 2, 3, 100, "1. RealEstateDto { Street = C, City = , ZipCode = 0, State = , Beds = 2, Baths = 3, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longtitude = 0 }")]
-        [TestCase(1, 1, 100, 5, 2, 100, 1, 1, 100, "1. RealEstateDto { Street = B, City = , ZipCode = 0, State = , Beds = 5, Baths = 2, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longtitude = 0 }")]
-        [TestCase(1, 1, 100, 3, 2, 100, 2, 3, 100, "1. RealEstateDto { Street = B, City = , ZipCode = 0, State = , Beds = 3, Baths = 2, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longtitude = 0 }\r\n2. RealEstateDto { Street = C, City = , ZipCode = 0, State = , Beds = 2, Baths = 3, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longtitude = 0 }")]
+        [TestCase(1, 1, 100, 1, 2, 100, 2, 3, 100, "1. RealEstateDto { Street = C, City = , Zip = 0, State = , Beds = 2, Baths = 3, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longitude = 0 }")]
+        [TestCase(1, 1, 100, 5, 2, 100, 1, 1, 100, "1. RealEstateDto { Street = B, City = , Zip = 0, State = , Beds = 5, Baths = 2, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longitude = 0 }")]
+        [TestCase(1, 1, 100, 3, 2, 100, 2, 3, 100, "1. RealEstateDto { Street = B, City = , Zip = 0, State = , Beds = 3, Baths = 2, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longitude = 0 }\r\n2. RealEstateDto { Street = C, City = , Zip = 0, State = , Beds = 2, Baths = 3, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longitude = 0 }")]
         public void Task_FindCheapestApartmentWithLargestNumberOfRooms(
             int firstBeds, int firstBaths, decimal firstPrice, 
             int secondBeds, int secondBaths, decimal secondPrice, 

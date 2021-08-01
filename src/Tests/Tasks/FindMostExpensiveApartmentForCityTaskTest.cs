@@ -37,9 +37,9 @@ namespace Tests.Tasks
             FindMostExpensiveApartmentForCityTask task = new FindMostExpensiveApartmentForCityTask(resultListFormater, list, taxesInCities);
             var result = task.Execute();
 
-            var expectedResult = "1. RealEstateDto { Street = A, City = City1, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longtitude = 0 }\r\n" +
-                "2. RealEstateDto { Street = D, City = City2, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 120, Latitude = 0, Longtitude = 0 }\r\n" +
-                "3. RealEstateDto { Street = G, City = City3, ZipCode = 0, State = , Beds = 0, Baths = 0, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 230, Latitude = 0, Longtitude = 0 }";
+            var expectedResult = "1. RealEstateDto { Street = A, City = City1, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 100, Latitude = 0, Longitude = 0 }\r\n" +
+                "2. RealEstateDto { Street = D, City = City2, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 120, Latitude = 0, Longitude = 0 }\r\n" +
+                "3. RealEstateDto { Street = G, City = City3, Zip = 0, State = , Beds = 0, Baths = 0, SqFt = 0, Type = , SaleDate = 01.01.2020 00:00:00, Price = 230, Latitude = 0, Longitude = 0 }";
 
             Assert.AreEqual(expectedResult, result);
         }

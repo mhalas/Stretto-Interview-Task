@@ -4,9 +4,14 @@ namespace Common.DTO
 {
     public record RealEstateDto
     {
+        public RealEstateDto()
+        {
+
+        }
+
         public RealEstateDto(string street, 
             string city, 
-            int zipCode, 
+            int zip, 
             string state,
             int beds,
             int baths,
@@ -15,11 +20,11 @@ namespace Common.DTO
             DateTime saleDate,
             decimal price,
             float latitude,
-            float longtitude)
+            float longitude)
         {
             Street = street;
             City = city;
-            ZipCode = zipCode;
+            Zip = zip;
             State = state;
             Beds = beds;
             Baths = baths;
@@ -28,20 +33,20 @@ namespace Common.DTO
             SaleDate = saleDate;
             Price = price;
             Latitude = latitude;
-            Longtitude = longtitude;
+            Longitude = longitude;
         }
 
-        public string Street { get; }
-        public string City { get; }
-        public int ZipCode { get; }
-        public string State { get; }
-        public int Beds { get; }
-        public int Baths { get; }
-        public int SqFt { get; }
-        public string Type { get; }
-        public DateTime SaleDate { get; }
-        public decimal Price { get; }
-        public float Latitude { get; }
-        public float Longtitude { get; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public int Zip { get; set; }
+        public string State { get; set; }
+        public int Beds { get; set; }
+        public int Baths { get; set; }
+        public int SqFt { get; set; }
+        public string Type { get; set; }
+        public DateTime SaleDate { get; set; }
+        public decimal Price { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
     }
 }
